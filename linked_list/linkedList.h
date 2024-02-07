@@ -8,71 +8,99 @@ typedef struct {
     struct Node* next;
 } Node;
 
-Node* base_node_address = NULL;
-Node* current_node_address = NULL;
-Node* previous_node_address = NULL;
+typedef struct {
+    int index;
+    Node* base_node_address;
+    Node* current_node_address;
+    Node* previous_node_address;
+    int location;
+    int MAX_NODES;
+    struct Node* current_node;
+    struct Spine* next;
+} Spine;
 
+Spine* base_spine_address = NULL;
+Spine* current_spine_address = NULL;
+Spine* previous_spine_address = NULL;
 
-int defaultSize = 10;
-int MAX_NODES= 10;
-Node** pointer = NULL;
+int spineIndex = 0;
 bool ran = false;
+bool firstSpine = true;
 
-void size(int size) {
-    MAX_NODES = size;
-    pointer = (Node**)malloc(MAX_NODES * sizeof(Node*));
+void size(Spine* spine, const int length) {
+    spine->MAX_NODES = length;
     ran = true;
 }
 
-int location = 0;
+Spine* newLinkedList() {
+    Spine* newSpine = malloc(sizeof(Spine));
+    newSpine->index = spineIndex;
+    newSpine->base_node_address = NULL;
+    newSpine->next = NULL;
+    newSpine->location = 0;
 
+    current_spine_address = newSpine;
 
-Node* createNode(int nodeData) {
-
-    if (ran == false) {
-        pointer[defaultSize];
-        return NULL;
+    if (spineIndex != 0) {
+        previous_spine_address->next = newSpine;
     }
     else {
-        pointer[MAX_NODES];
+        base_spine_address = newSpine;
+        firstSpine = false;
+    }
+    ++spineIndex;
+    previous_spine_address = newSpine;
+
+    return newSpine;
+}
+
+
+Node* createNode(Spine* spine, const int nodeData) {
+    int location = spine->location;
+
+    if (firstSpine == true) {
+        firstSpine = false; // wtf?
     }
 
-    if (location >= MAX_NODES) {
-        printf("Max size reached\n");
+    if (ran == false) {
+        printf("You must call the size() function before creating a node\n");
+        return NULL;
+    }
+
+    if (location >= spine->MAX_NODES) {
+        printf("Memory allocation failed\n");
         return NULL;
     }
 
     Node* newNode = (Node*)malloc(sizeof(Node));
 
     if (newNode == NULL) {
-        printf("Memory allocation failed\n"); 
+        printf("Memory allocation failed\n");
         return NULL;
     }
 
     newNode->data = nodeData;
     newNode->index = location;
     newNode->next = NULL;
-    current_node_address = newNode;
-    // pointer[location] = newNode; /* Stores the memory address of the struct. */
+    spine->current_node_address = newNode; /* Set the current node address to the new node. */
 
     if (location != 0) {
-        previous_node_address->next = current_node_address;
-        // pointer[location - 1]->next = newNode; /* Set the next pointer of the previous node to the new node */
+        spine->previous_node_address->next = spine->current_node_address;
     }
     else {
-        base_node_address = newNode; /* Set the base node address to the new node. */
+        spine->base_node_address = newNode; /* Set the base node address to the new node. */
     }
-    previous_node_address = current_node_address;
-    location++; /* Increment location */
+    spine->previous_node_address = spine->current_node_address;
+    spine->location = ++location; /* Increment location */
     return newNode;
 }
 
-void removeNode(int nodeIndex) {
+void removeNode(Spine* spine, const int nodeIndex) {
     Node* prev_node_addr = NULL;
-    Node* temp = base_node_address;
+    Node* temp = spine->base_node_address;
 
     if (temp->index == nodeIndex) {
-        base_node_address = temp->next;
+        spine->base_node_address = temp->next;
         free(temp);
         return;
     }
@@ -86,20 +114,21 @@ void removeNode(int nodeIndex) {
             loop = false;
             return;
         }
-        else {
-            prev_node_addr = temp;
-            temp = temp->next;
-        }
+
+        prev_node_addr = temp;
+        temp = temp->next;
     }
 }
 
-void printNodes() {
-    Node* temp = base_node_address;
+void printNodes(const Spine* spine) {
+    Node* temp = spine->base_node_address;
     while (temp != NULL) {
+        printf("spine: %d\n", spine->index);
         printf("pointer: %p\n", temp);
         printf("index: %d\n", temp->index);
         printf("data: %d\n", temp->data);
         printf("next: %p\n", temp->next);
         temp = temp->next;
     }
+    printf("\n\n\n");
 }
