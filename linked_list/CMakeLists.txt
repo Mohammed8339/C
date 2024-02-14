@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.28)
-project(untitled C)
+project(todo_list)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled main.c)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+add_executable(todo_list
+        main.c
+        linkedList.h
+        linkedList.c)

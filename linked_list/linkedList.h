@@ -22,11 +22,12 @@ typedef struct {
 } Spine;
 
 // Function declarations
-void size(Spine* spine, const int length);
+//void size(Spine* spine, const int length);
 Spine* newLinkedList();
 Node* createNode(Spine* spine, const char* nodeData);
 void printNodes(const Spine* spine);
 char* getNode(const Spine* spine, const int index);
+int getSize(const Spine* spine);
 
 // Variable declarations
 extern Spine* base_spine_address;
