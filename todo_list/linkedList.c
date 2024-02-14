@@ -8,13 +8,13 @@ Spine* base_spine_address = NULL;
 Spine* current_spine_address = NULL;
 Spine* previous_spine_address = NULL;
 int spineIndex = 0;
-int ran = 0;
+//int ran = 0;
 int firstSpine = 0;
 
-void size(Spine* spine, const int length) {
-    spine->MAX_NODES = length;
-    ran = true;
-}
+//void size(Spine* spine, const int length) {
+//    spine->MAX_NODES = length;
+//    ran = true;
+//}
 
 Spine* newLinkedList() {
     Spine* newSpine = malloc(sizeof(Spine));
@@ -43,18 +43,20 @@ Node* createNode(Spine* spine, const char* nodeData) {
     int location = spine->location;
 
     if (firstSpine == true) {
-        firstSpine = false; // wtf?
+        firstSpine = false;
+        // if the first spine is created,
+        // set the firstSpine to false will eventually be used for something
     }
 
-    if (ran == false) {
-        printf("You must call the size() function before creating a node\n");
-        return NULL;
-    }
+//    if (ran == false) {
+//        printf("You must create a spine before creating a node\n");
+//        return NULL;
+//    }
 
-    if (location >= spine->MAX_NODES) {
-        printf("Memory allocation failed\n");
-        return NULL;
-    }
+//    if (location >= spine->MAX_NODES) {
+//        printf("Memory allocation failed\n");
+//        return NULL;
+//    }
 
     Node* newNode = (Node*)malloc(sizeof(Node));
 
@@ -133,4 +135,8 @@ char* getNode(const Spine* spine, const int nodeIndex) {
         temp = (Node *) temp->next;
     }
     return NULL;
+}
+
+int getSize(const Spine* spine) {
+    return (int) spine->location;
 }

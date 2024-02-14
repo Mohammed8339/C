@@ -5,14 +5,14 @@
 Spine* linkedList = NULL;
 
 void print_tasks() {
-    for (int i = 0; i < linkedList->MAX_NODES; i++) {
+    for (int i = 0; i < linkedList->location; i++) {
         printf("%s\n", getNode(linkedList, i));
     }
+    getSize(linkedList);
 }
 
 int main() {
     linkedList = newLinkedList();
-    size(linkedList, 10);
 
     int tally = 0;
     while (tally < 10) {
