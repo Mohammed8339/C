@@ -1,10 +1,10 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.7"
+VERSION_NUMBER="1.8"
 
 update() {
-    curl -o updated.sh -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
+    curl -o updated.sh -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh?$(date +%s)" 2> /dev/null
     mv updated.sh "$0"
     chmod +x "$0"
     echo "updated successfully... run with -h for help."
@@ -21,7 +21,7 @@ fi
 
 if [ "$1" = "-u" ]; then
     echo "checking for updates..."
-    version=$(curl -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt" 2> /dev/null )
+    version=$(curl -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt?$(date +%s)" 2> /dev/null )
 
     if [ "$version" != "$VERSION_NUMBER" ]; then
                 echo "update available... would you like to update? (y/N)"
