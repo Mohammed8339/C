@@ -1,10 +1,10 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.1"
+VERSION_NUMBER="1.2"
 
 update() {
-        curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh"
+        curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
         mv updated.sh "$0"
         chmod +x "$0"
         echo "updated successfully... run with -h for help."
