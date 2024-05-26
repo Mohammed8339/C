@@ -1,14 +1,14 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.3"
+VERSION_NUMBER="1.4"
 
 update() {
-        curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
-        mv updated.sh "$0"
-        chmod +x "$0"
-        echo "updated successfully... run with -h for help."
-        exit 0
+    curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
+    mv updated.sh "$0"
+    chmod +x "$0"
+    echo "updated successfully... run with -h for help."
+    exit 0
 }
 
 
@@ -20,21 +20,21 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ "$1" = "-u" ]; then
-        echo "checking for updates..."
-        version=$(curl "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt" 2> /dev/null )
+    echo "checking for updates..."
+    version=$(curl "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt" 2> /dev/null )
 
-        if [ "$version" != "$VERSION_NUMBER" ]; then
-                echo "updating..."
-                update
-                exit 0
-        else
-                echo "already up to date."
-                echo "version retrieved: $version"
-                                echo "current version: $VERSION_NUMBER"
-                                exit 0
-        fi
-
+    if [ "$version" != "$VERSION_NUMBER" ]; then
+        echo "updating..."
+        update
         exit 0
+    else
+        echo "already up to date."
+        echo "version retrieved: $version"
+        echo "current version: $VERSION_NUMBER"
+        exit 0
+    fi
+
+    exit 0
 fi
 
 if [ "$1" = "-s" ]; then
@@ -45,15 +45,29 @@ if [ "$1" = "-s" ]; then
 fi
 
 if [ "$1" = "-h" ]; then
-        echo "----- HELP -----"
-        echo ""
-        echo "build FILE.c"
-        echo ""
-        echo "--- OPTIONAL ---"
-        echo ""
-        echo "build FILE.c OUTPUT_NAME"
-        echo "ex: build main.c output"
+    echo ""
+    echo "------ HELP ------"
+    echo ""
+    echo "build -u"
+    echo "updates the program if there is a update"
+    echo ""
+    echo "build -v"
+    echo "prints version number"
+    echo ""
+    echo "---- BUILD(S) ----"
+    echo ""
+    echo "build FILE.c"
+    echo ""
+    echo "---- OPTIONAL ----"
+    echo ""
+    echo "build FILE.c OUTPUT_NAME"
+    echo "ex: build main.c output"
+    echo ""
+    exit 0
+fi
 
+if [ "$1" = "-v" ]; then
+    echo "$VERSION_NUMBER"
     exit 0
 fi
 
@@ -66,9 +80,9 @@ fi
 result=$?
 
 if [ $result -eq 0 ]; then
-        echo "build successful with exit code: $result"
-        exit 0
+    echo "build successful with exit code: $result"
+    exit 0
 else
-        echo "build failed with exit code: $result"
-        exit 1
+    echo "build failed with exit code: $result"
+    exit 1
 fi
