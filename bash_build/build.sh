@@ -1,7 +1,7 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.4"
+VERSION_NUMBER="1.5"
 
 update() {
     curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
