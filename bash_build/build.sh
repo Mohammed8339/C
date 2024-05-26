@@ -1,7 +1,7 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.2"
+VERSION_NUMBER="1.3"
 
 update() {
         curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
@@ -29,7 +29,9 @@ if [ "$1" = "-u" ]; then
                 exit 0
         else
                 echo "already up to date."
-                exit 0
+                echo "version retrieved: $version"
+                                echo "current version: $VERSION_NUMBER"
+                                exit 0
         fi
 
         exit 0
