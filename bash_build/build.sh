@@ -1,10 +1,10 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.6"
+VERSION_NUMBER="1.7"
 
 update() {
-    curl -o updated.sh "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
+    curl -o updated.sh -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh" 2> /dev/null
     mv updated.sh "$0"
     chmod +x "$0"
     echo "updated successfully... run with -h for help."
@@ -21,12 +21,20 @@ fi
 
 if [ "$1" = "-u" ]; then
     echo "checking for updates..."
-    version=$(curl "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt" 2> /dev/null )
+    version=$(curl -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/version.txt" 2> /dev/null )
 
     if [ "$version" != "$VERSION_NUMBER" ]; then
-        echo "updating..."
-        update
-        exit 0
+                echo "update available... would you like to update? (y/N)"
+                read -r choice
+
+                if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
+                        echo "updating..."
+                        update
+                        exit 0
+                else
+                        echo "cancelling..."
+                        exit 0
+                fi
     else
         echo "already up to date."
         echo "version retrieved: $version"
