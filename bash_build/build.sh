@@ -25,16 +25,16 @@ if [ "$1" = "-u" ]; then
 
     if [ "$version" != "$VERSION_NUMBER" ]; then
                 echo "update available... would you like to update? (y/N)"
-                read -r choice
+        read -r choice
 
-                if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
-                        echo "updating..."
-                        update
-                        exit 0
-                else
-                        echo "cancelling..."
-                        exit 0
-                fi
+        if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
+                echo "updating..."
+                update
+                exit 0
+        else
+                echo "cancelling..."
+                exit 0
+        fi
     else
         echo "already up to date."
         echo "version retrieved: $version"
@@ -44,6 +44,27 @@ if [ "$1" = "-u" ]; then
 
     exit 0
 fi
+
+if [ "$1" = "-m" ]; then
+
+        files=$(ls *.c 2>/dev/null)
+
+        echo "" > makefile
+        echo "CC = gcc" >> ./makefile
+        echo "CC_FLAGS = -g -pedantic -W -Wall -ansi" >> ./makefile
+        echo "FILES = " $files >> ./makefile
+        echo "OUT_EXE = output" >> ./makefile
+        echo "\n" >> ./makefile
+        echo "build: \$(FILES)" >> ./makefile
+        echo "          \$(CC) \$(CC_FLAGS) -o \$(OUT_EXE) \$(FILES)" >> ./makefile
+        echo "\n" >> ./makefile
+        echo "clean: rm -f *.o core *.exe *~" >> ./makefile
+        echo "\n" >> ./makefile
+        echo "rebuild: clean build" >> ./makefile
+        echo "done"
+        exit 0
+fi
+
 
 if [ "$1" = "-s" ]; then
     echo 'alias build="~/build.sh"' >> ~/.bashrc
