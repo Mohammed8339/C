@@ -1,7 +1,7 @@
 #!/bin/sh
 umask 022
 
-VERSION_NUMBER="1.8"
+VERSION_NUMBER="2.0"
 
 update() {
     curl -o updated.sh -H "Cache-Control: no-cache" "https://raw.githubusercontent.com/MohammedAlAkashi/C/main/bash_build/build.sh?$(date +%s)" 2> /dev/null
